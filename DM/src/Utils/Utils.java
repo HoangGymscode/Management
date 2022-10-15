@@ -1,11 +1,16 @@
 package Utils;
 
-import data.Dealer;
+import Subjects.Account;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -15,243 +20,154 @@ import java.util.Scanner;
  */
 public class Utils {
 
-    public static Scanner sc() {
-        return new Scanner(System.in);
-    }
+    private static final String FILE = "data/account.txt";
 
-    public static String getString(String welcome) {
-        boolean check = true;
-        String result = "";
-        Scanner sc = new Scanner(System.in);
-        do {
-            System.out.print(welcome);
-            result = sc.nextLine();
-            if (result.isEmpty()) {
-                System.out.println("Please Re-Enter text!!!!!!!!!");
-            } else {
-
-//            	if (result.contains(" ") || result.length() < 5) {
-//            		System.out.println("Please Re-Enter text!!!!!!!!!");
-//            	} else {
-//                	check = false;
-//            	}
-                check = false;
-            }
-
-        } while (check);
-
-        return result;
-    }
-
-    public static String getStringStatus(String welcome) {
-        boolean check = true;
-        String result = "";
-        Scanner sc = new Scanner(System.in);
-        do {
-            System.out.print(welcome);
-            result = sc.nextLine();
-            if (result.isEmpty()) {
-                System.out.println("Please Re-Enter text!!!!!!!!!");
-            } else {
-
-                if (result.equals("Available") || result.equals("Not Available")) {
-                    check = false;
-                } else {
-                    System.out.println("Please Re-Enter text!!!!!!!!!");
-                }
-            }
-
-        } while (check);
-
-        return result;
-    }
-
-    public static int getIntmin(String welcome, int min) {
-        boolean check = true;
-        int number = 0;
-        Scanner sc = new Scanner(System.in);
-        do {
-            try {
-                System.out.print(welcome);
-                number = Integer.parseInt(sc.nextLine());
-                if (number < min) {
-                    System.out.println("Number must be large than " + min);
-                } else {
-                    check = false;
-                }
-            } catch (Exception e) {
-                System.out.println("Input number!!!!!");
-            }
-        } while (check || number < min);
-        return number;
-    }
-
-    public static float getFloat(String welcome, float min, float max) {
-        boolean check = true;
-        float number = 0;
-        Scanner sc = new Scanner(System.in);
-        do {
-            try {
-                System.out.print(welcome);
-                String userEnter = sc.nextLine();
-                number = Float.parseFloat(userEnter);
-
-                if (number < min || number > max) {
-                    System.out.println("Please Re-Enter number!!!");
-                } else {
-                    check = false;
-                }
-            } catch (Exception e) {
-                System.out.println("Please Enter number!!!");
-            }
-
-        } while (check);
-
-        return number;
-    }
-
-    public static int getInt(String welcome, int i) {
-        System.out.print(welcome);
-        boolean check = true;
-        int number = 0;
-        Scanner sc = new Scanner(System.in);
-        number = Integer.parseInt(sc.nextLine());
-        return number;
-    }
-
-//    public static boolean checkDuplicateName(List<Product> list, String ProductName) {
-//    	boolean check = false;
-//    	for (Product p : list) {
-//    		String pName = p.getProductName();
-//    		if (pName.equalsIgnoreCase(ProductName)) {
-//    			check = true;
-//    			break;
-//    		}
-//    	}
-//    	
-//    	return check;
-//    }
-//    public static boolean checkDuplicateId(List<Product> list, String ProductID) {
-//    	for (Product p : list) {    
-//    		String pID = p.getProductID(); 
-//    		if (pID.equalsIgnoreCase(ProductID)) {    
-//    			return true;
-//    		}
-//    	}
-//    	
-//    	return false;
-//    }
-//    public static Product getProduct(String productString) {
-//    	Product product = new Product();
-//    	String[] arrayAttr = new String[5];
-//    	
-//    	String[] array = productString.split(", ");
-//    	for (int i = 0; i < array.length; i++) {
-//    		String str = array[i];
-//    		String[] arr = str.split(": ");
-//    		arrayAttr[i] = arr[1];
-//    	}
-//    	
-//    	product.setProductID(arrayAttr[0]);
-//    	product.setProductName(arrayAttr[1]);
-//    	product.setUnitPrice(Float.valueOf(arrayAttr[2]));
-//    	product.setQuantity(Integer.valueOf(arrayAttr[3]));
-//    	product.setStatus(arrayAttr[4]);
-//    	
-//    	return product;
-//    }
-    public static List<String> readFromFile(String filename) {
-        List<String> files = new ArrayList<>();
-        File file = new File(filename);
-        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-            String line = null;
-            while ((line = br.readLine()) != null) {
-                files.add(line);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return files;
-    }
-    public static final String SEPARATOR = ",";
-
-    public static int readInt(String message) {
-
-        System.out.print(message);
-        int input = sc().nextInt();
-        return input;
-    }
-
-    public static boolean readBool(String message) {
-        System.out.print(message + " Y/N: ");
-        String input = sc().nextLine().trim();
-
-        if (input.isEmpty()) {
-            return false;
-        }
-        String c = input.toUpperCase();
-
-        return c.equals("Y");
-    }
-
-    public static boolean CheckReturn() {
-        System.out.println("Do you want to continue or not? (Y/N)");
-        boolean kt = false;
-        Scanner sc = new Scanner(System.in);
-        String ct = sc.nextLine();
-        if (ct.equals("Y") || ct.equals("y")) {
-            return kt = true;
-        } else if (ct.equals("N") || ct.equals("n")) {
-            System.exit(0);
-        } else {
-            return kt;
-        }
-
+    /*
+	 * Checking whether str matches a pattern or not
+	 * Use the method String.matches(regEx)
+     */
+    public static boolean validStr(String str, String regEx) {
         return false;
     }
 
+    /*
+	 * Checking a password with minLength in which it contains 
+	 * at least a character, a number and 1 specific character
+     */
+    public static boolean validPassword(String password, int minLenght) {
+        if (password.length() < minLenght) {
+            return false;
+        }
+        return password.matches(".*[a-zA-Z]+.*")
+                && password.matches(".*[\\d]+.*")
+                && password.matches(".*[\\W]+.*");
+    }
+
+    // Convert data string to Date - Using class SimpleDataFormat
+    public static Date parseDate(String dateStr, String dateFormat) {
+        SimpleDateFormat sdf = (SimpleDateFormat) SimpleDateFormat.getInstance();
+        sdf.applyPattern(dateFormat);
+
+        try {
+            long time = sdf.parse(dateStr).getTime();
+            return new Date(time);
+        } catch (ParseException e) {
+            System.out.println(e);
+        }
+
+        return null;
+    }
+
+    // Convert Data to data string
+    public static String dateToString(Date date, String dateFormat) {
+        return null;
+    }
+
+    // Convert bool string to boolean
     public static boolean parseBool(String boolStr) {
         char c = boolStr.trim().toUpperCase().charAt(0);
         return (c == '1' || c == 'Y' || c == 'T');
     }
 
+    // Method for inputting data - Requires non-blank
+    public static String readNonBlank(String message) {
+        String input = "";
+
+        do {
+            System.out.print(message + ": ");
+            input = sc().nextLine().trim();
+
+        } while (input.isEmpty());
+
+        return input;
+    }
+
+    // Input string that matches pattern
     public static String readPattern(String message, String pattern) {
         String input = "";
         boolean valid = false;
 
         do {
-            System.out.print(message);
+            System.out.print(message + ": ");
             input = sc().nextLine().trim();
 
-            valid = !input.isEmpty();
+            valid = input.matches(pattern);//....
         } while (!valid);
 
         return input;
     }
-     public static List<String> readLinesFromFile(String filename) {
-        List<String> files = new ArrayList<>();
-        File file = new File(filename);
-        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+
+    public static boolean checkRole() {
+        List<String> lines = Utils.readLinesFromFile(FILE);
+        for (String line : lines) {
+            String[] parts = line.split(Account.SEPARATOR);
+            if (parts.length <3) {
+                return false;
+            }
+            // ghi viết đọc để check role;
+            
+         
+//                    && parts[1].equals(account.getPassword())
+//                    && parts[2].equalsIgnoreCase(account.getRole())) {
+                return true;
+//            }
+        }
+    
+        return false;
+        }
+        // Method for inputting integer type
+    public static int readInt(String message) {
+        System.out.print(message + ": ");
+        int input = sc().nextInt();
+        return input;
+    }
+
+    // Method for inputting boolean type
+    public static boolean readBool(String message) {
+        System.out.print(message + " Y/N: ");
+        String input = sc().nextLine().trim().toUpperCase();
+
+        if (input.isEmpty()) {
+            return false;
+        }
+//		String c = input.toUpperCase();
+
+        return parseBool(input);
+    }
+
+    /*
+	 * Method for reading lines from text file
+	 * @return list of lines
+     */
+    public static List<String> readLinesFromFile(String filename) {
+        List<String> lines = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(new File(filename)))) {
             String line = null;
             while ((line = br.readLine()) != null) {
-                files.add(line);
+                lines.add(line);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return files;
+
+        return lines;
     }
-     public static void writeFile(String filename, List<Dealer> list) {
-		
-	}
-     public static String readNonBlank(String message) {
-		String input = "";
-		
-		do {
-			System.out.print(message + ": ");
-			input = sc().nextLine().trim();
-		} while (input.isEmpty() || input.isEmpty());
-		
-		return input;
-	}
+
+    // Method for writing a list to a text file line-by-line
+    public static <T> void writeFile(String filename, List<T> list) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
+            for (T d : list) {
+                bw.write(d.toString());
+                bw.append('\n');
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static Scanner sc() {
+        return new Scanner(System.in);
+    }
+
 }

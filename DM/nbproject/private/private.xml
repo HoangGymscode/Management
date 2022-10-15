@@ -4,11 +4,17 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/HOANG/Desktop/Pr2/DM/src/Utils/Utils.java</file>
-            <file>file:/C:/Users/HOANG/Desktop/Pr2/DM/src/data/Dealer.java</file>
-            <file>file:/C:/Users/HOANG/Desktop/Pr2/DM/src/data/Account.java</file>
-            <file>file:/C:/Users/HOANG/Desktop/Pr2/DM/src/data/DealerList.java</file>
-            <file>file:/C:/Users/HOANG/Desktop/Pr2/DM/src/mng/LogIn.java</file>
-            <file>file:/C:/Users/HOANG/Desktop/Pr2/DM/src/data/Config.java</file>
+            <file>file:/C:/Users/HOANG/Desktop/Pr2/DM/src/Subjects/Delivery.java</file>
+            <file>file:/C:/Users/HOANG/Desktop/Pr2/DM/src/Subjects/Dealer.java</file>
+            <file>file:/C:/Users/HOANG/Desktop/Pr2/DM/src/Utils/Text.java</file>
+            <file>file:/C:/Users/HOANG/Desktop/Pr2/DM/src/Function/DealerList.java</file>
+            <file>file:/C:/Users/HOANG/Desktop/Pr2/DM/src/Subjects/Account.java</file>
+            <file>file:/C:/Users/HOANG/Desktop/Pr2/DM/src/Main/LogIn.java</file>
+            <file>file:/C:/Users/HOANG/Desktop/Pr2/DM/src/Function/Boss.java</file>
+            <file>file:/C:/Users/HOANG/Desktop/Pr2/DM/src/Main/Menu.java</file>
+            <file>file:/C:/Users/HOANG/Desktop/Pr2/DM/src/AccessFile/AccountChecker.java</file>
+            <file>file:/C:/Users/HOANG/Desktop/Pr2/DM/src/AccessFile/Config.java</file>
+            <file>file:/C:/Users/HOANG/Desktop/Pr2/DM/src/Function/DeliveryList.java</file>
         </group>
     </open-files>
 </project-private>
